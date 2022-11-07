@@ -1,7 +1,7 @@
 resource "aws_instance" "ansible-ec2" {
-   ami = var.ami
-   instance_type = var.instance-type
+   ami = ami1
+   instance_type = instance-type1
    associate_public_ip_address = true
-   key_name = var.keyname
-   vpc_security_group_ids = [var.security-group]
+   key_name = keyname1
+   vpc_security_group_ids = [security-group1]
 }
