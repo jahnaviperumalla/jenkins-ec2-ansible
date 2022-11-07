@@ -121,3 +121,11 @@ resource "aws_instance" "web" {
     Name = "HelloWorld"
   }
 }
+
+
+vars:
+     keypair: 'harish-neworegon'
+     instance_type: 't2.small'
+     ami_id: 'ami-017fecd1353bcc96e'
+     region: 'us-west-2'
+     security_group: 'launch-wizard6'
