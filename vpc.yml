@@ -3,21 +3,21 @@
   hosts: localhost
   gather_facts: False
   vars:
-     vpc_name: ansible-vpc
-     vpc_cidr: 10.10.0.0/16
-     subnet_cidr: 10.10.0.0/24
-     region: us-west-2
-     subnet_name: ansible-subnet
-     igw_name: ansible-gateway
-     route_name: ansible-igw-route
+     vpc_name1: ansible-vpc
+     vpc_cidr1: 10.10.0.0/16
+     subnet_cidr1: 10.10.0.0/24
+     region1: us-west-2
+     subnet_name1: ansible-subnet
+     igw_name1: ansible-gateway
+     route_name1: ansible-igw-route
 
 
   tasks:
     - name: Vpc creation
       ec2_vpc_net:
-        name: "{{ vpc_name }}"
-        cidr_block: "{{ vpc_cidr }}"
-        region: "{{ region }}"
+        name: "{{ vpc_name1}}"
+        cidr_block: "{{ vpc_cidr1 }}"
+        region: "{{ region1 }}"
         state: present
       register: aws_vpc_info
 
@@ -25,31 +25,31 @@
       ec2_vpc_subnet:
          state: present
          vpc_id: "{{ aws_vpc_info.vpc.id }}"
-         region: "{{ region }}"
-         cidr: "{{ subnet_cidr }}"
+         region: "{{ region1 }}"
+         cidr: "{{ subnet_cidr1 }}"
          map_public: yes
          resource_tags:
-           Name: "{{ subnet_name }}"
+           Name: "{{ subnet_name1 }}"
       register: aws_subnet_info
 
     - name: create IGW
       ec2_vpc_igw:
          vpc_id: "{{ aws_vpc_info.vpc.id }}"
-         region: "{{ region }}"
+         region: "{{ region1 }}"
          state: "present"
          tags:
-            Name: "{{ igw_name }}"
+            Name: "{{ igw_name1 }}"
       register: aws_igw_info
 
     - name: Route IGW
       ec2_vpc_route_table:
          vpc_id: "{{ aws_vpc_info.vpc.id }}"
-         region: "{{ region }}"
+         region: "{{ region1 }}"
          subnets:
               - "{{ aws_subnet_info.subnet.id }}"
          routes:
              - dest: 0.0.0.0/0
                gateway_id: "{{ aws_igw_info.gateway_id  }}"
          tags:
-           Name: "{{ route_name }}"
+           Name: "{{ route_name1 }}"
 
