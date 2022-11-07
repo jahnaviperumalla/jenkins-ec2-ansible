@@ -6,12 +6,12 @@
   tasks:
      - name: Task # 1 Launch the new EC2 Instance
        ec2:
-          group: "{{ security_group }}"
-          instance_type: "{{ instance_type }}"
+          group: "{{ security_group1 }}"
+          instance_type: "{{ instance_type1 }}"
           wait: true
-          region: "{{ region }}"
-          keypair: "{{ keypair }}"
-          image: "{{ ami_id }}"
+          region: "{{ region1 }}"
+          keypair: "{{ keypair11 }}"
+          image: "{{ ami_id1 }}"
        register: ec2
 
         
