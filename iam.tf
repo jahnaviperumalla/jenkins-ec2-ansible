@@ -1,11 +1,11 @@
 resource "aws_iam_user" "adminuser1" {
-  name = "var.user_name_for_s3readonlyacess"
+  name = "user_name_for_s3readonlyacess"
 }
 
 
 
 resource "aws_iam_user" "adminuser2" {
-  name = "var.user_name_for_s3fullacess"
+  name = "user_name_for_s3fullacess"
 }
 
 
@@ -111,8 +111,8 @@ resource "aws_iam_instance_profile" "test_profile" {
 
 
 resource "aws_instance" "web" {
-  ami           = "ami-01216e7612243e0ef"
-  instance_type = "t2.micro"
+  ami           = "ami_id"
+  instance_type = "type"
   iam_instance_profile = aws_iam_instance_profile.test_profile.name
 
 
@@ -123,9 +123,3 @@ resource "aws_instance" "web" {
 }
 
 
-vars:
-     keypair: 'harish-neworegon'
-     instance_type: 't2.small'
-     ami_id: 'ami-017fecd1353bcc96e'
-     region: 'us-west-2'
-     security_group: 'launch-wizard6'
