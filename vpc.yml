@@ -1,0 +1,55 @@
+---
+- name:  provisioning EC2 instances using Ansible
+  hosts: localhost
+  gather_facts: False
+  vars:
+     vpc_name: ansible-vpc
+     vpc_cidr: 10.10.0.0/16
+     subnet_cidr: 10.10.0.0/24
+     region: us-west-2
+     subnet_name: ansible-subnet
+     igw_name: ansible-gateway
+     route_name: ansible-igw-route
+
+
+  tasks:
+    - name: Vpc creation
+      ec2_vpc_net:
+        name: "{{ vpc_name }}"
+        cidr_block: "{{ vpc_cidr }}"
+        region: "{{ region }}"
+        state: present
+      register: aws_vpc_info
+
+    - name: associate subnet to the VPC
+      ec2_vpc_subnet:
+         state: present
+         vpc_id: "{{ aws_vpc_info.vpc.id }}"
+         region: "{{ region }}"
+         cidr: "{{ subnet_cidr }}"
+         map_public: yes
+         resource_tags:
+           Name: "{{ subnet_name }}"
+      register: aws_subnet_info
+
+    - name: create IGW
+      ec2_vpc_igw:
+         vpc_id: "{{ aws_vpc_info.vpc.id }}"
+         region: "{{ region }}"
+         state: "present"
+         tags:
+            Name: "{{ igw_name }}"
+      register: aws_igw_info
+
+    - name: Route IGW
+      ec2_vpc_route_table:
+         vpc_id: "{{ aws_vpc_info.vpc.id }}"
+         region: "{{ region }}"
+         subnets:
+              - "{{ aws_subnet_info.subnet.id }}"
+         routes:
+             - dest: 0.0.0.0/0
+               gateway_id: "{{ aws_igw_info.gateway_id  }}"
+         tags:
+           Name: "{{ route_name }}"
+

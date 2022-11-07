@@ -1,0 +1,23 @@
+---
+- name:  provisioning EC2 instances using Ansible
+  hosts: localhost
+  gather_facts: False
+  vars:
+     keypair: 'harish-neworegon'
+     instance_type: 't2.small'
+     ami_id: 'ami-017fecd1353bcc96e'
+     region: 'us-west-2'
+     security_group: 'launch-wizard6'
+  tasks:
+     - name: Task # 1 Launch the new EC2 Instance
+       ec2:
+          group: "{{ security_group }}"
+          instance_type: "{{ instance_type }}"
+          wait: true
+          region: "{{ region }}"
+          keypair: "{{ keypair }}"
+          image: "{{ ami_id }}"
+       register: ec2
+
+        
+     
