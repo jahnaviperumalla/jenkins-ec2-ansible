@@ -1,4 +1,4 @@
-resource "aws_instance" "ansible-ec2" {
+resource "aws_instance" "name" {
    ami = "ami1"
    instance_type = "type1"
    associate_public_ip_address = true
