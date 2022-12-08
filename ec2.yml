@@ -10,7 +10,7 @@
           instance_type: "{{ instance_type1 }}"
           wait: true
           region: "{{ region1 }}"
-          keypair: "{{ keypair11 }}"
+          keypair: "{{ keypair1 }}"
           image: "{{ ami_id1 }}"
        register: ec2
 
