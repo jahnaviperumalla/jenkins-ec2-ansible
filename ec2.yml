@@ -1,6 +1,6 @@
 ---
 - name:  provisioning EC2 instances using Ansible
-  hosts: localhost
+  hosts: webservers
   gather_facts: False
   
   tasks:
