@@ -8,12 +8,12 @@ variable "vpc_cidr" {
 
 variable "public_subnets_cidr" {
 	type = list
-	default = "public_cidr"
+	default = public_cidr
 }
 
 variable "private_subnets_cidr" {
 	type = list
-	default = "private_cidr"
+	default = private_cidr
 }
 
 variable "azs" {
