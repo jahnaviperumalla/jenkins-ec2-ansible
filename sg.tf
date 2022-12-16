@@ -1,6 +1,6 @@
 variable "port_values" {
 	type = list
-	default = "port_list"
+	default = ["port_list"]
 }
 
 resource "aws_security_group" "main" {
